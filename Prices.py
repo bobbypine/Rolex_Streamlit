@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 from urllib.error import URLError
-from PIL import Image
 
 
 @st.cache
@@ -12,11 +11,11 @@ class RolexPrices:
         self.download = self.data.to_csv()
 
     def rolex_price_data(self):
-        prices = self.data.iloc[:, 0:4]
-        listing_data = self.data.iloc[:, 4:8]
-        markup_data = self.data.iloc[:, 8:]
-        image = Image.open(r'H:\rolex.png')
-        st.image(image)
+        prices = self.data.loc[:, list(self.data.columns[0:4]) + list(self.data.columns[12:16])]
+        listing_data = self.data.loc[:, list(self.data.columns[4:8]) + list(self.data.columns[16:20])]
+        markup_data = self.data.loc[:, list(self.data.columns[8:12]) + list(self.data.columns[20:24])]
+
+
         try:
             reference_selection = st.multiselect("Choose Reference", list(prices.columns), ["124270"])
             listings = [f'{x} Listings' for x in reference_selection]
