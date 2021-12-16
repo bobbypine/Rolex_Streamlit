@@ -38,7 +38,7 @@ class RolexPrices:
             with st.expander('About the Data'):
                 st.write("""All resell pricing and listing information is sourced from Chrono24. Data
                 is gathered on a weekly basis on Friday. Prices are the median asking price for the selected
-                reference.""")
+                reference. Not affiliated with Rolex S.A. or its affiliates. """)
             st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
 
         except URLError as e:
