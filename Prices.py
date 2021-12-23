@@ -29,6 +29,7 @@ class RolexPrices:
 
 
         try:
+            st.image('crown.png')
             reference_selection = st.multiselect("Choose Reference", list(prices.columns), ["124270"])
             listings = [f'{x} Listings' for x in reference_selection]
             markups = [f'{x} Markup' for x in reference_selection]
@@ -42,9 +43,7 @@ class RolexPrices:
             col1.subheader("Pricing")
             col1.line_chart(price_data)
             for x in reference_selection:
-                col2.metric(label=f'{str(x)} Median Price', value='$'+ str(prices[x].tail(1).item()),
-                          delta=str(prices[x].tail(1).item()-prices[x].head(1).item()),
-                          delta_color="inverse")
+                col2.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item()))+'%')
             st.write('### Listings')
             st.bar_chart(listing_data)
             with st.expander('About the Data'):
