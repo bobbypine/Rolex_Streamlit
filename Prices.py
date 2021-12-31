@@ -14,15 +14,15 @@ class RolexPrices:
         # self.b = bitdotio.bitdotio(config.key)
         # self.connection = self.b.get_connection()
         # self.raw = f'''select * from "{config.user_name}/rolex_prices"."Weekly_Median_Prices.csv";'''
-        # self.download = pd.read_sql(self.raw, self.connection).set_index('date').to_csv()
+        # self.download = pd.read_sql(self.raw, self.connection).set_index('Date').to_csv()
         # self.prices = f'''select * from "{config.user_name}/rolex_prices"."Prices";'''
         # self.listings = f'''select * from "{config.user_name}/rolex_prices"."Listings";'''
         # self.markup = f'''select * from "{config.user_name}/rolex_prices"."Markup";'''
 
     def rolex_price_data(self):
-        # prices = pd.read_sql(self.prices, self.connection).set_index('date')
-        # listing_data = pd.read_sql(self.listings, self.connection).set_index('date')
-        # markup_data = pd.read_sql(self.markup, self.connection).set_index('date')
+        # prices = pd.read_sql(self.prices, self.connection).set_index('Date')
+        # listing_data = pd.read_sql(self.listings, self.connection).set_index('Date')
+        # markup_data = pd.read_sql(self.markup, self.connection).set_index('Date')
         prices = self.data.loc[:, list(self.data.columns[0:4]) + list(self.data.columns[12:16])]
         listing_data = self.data.loc[:, list(self.data.columns[4:8]) + list(self.data.columns[16:20])]
         markup_data = self.data.loc[:, list(self.data.columns[8:12]) + list(self.data.columns[20:24])]
@@ -49,7 +49,7 @@ class RolexPrices:
             with st.expander('About the Data'):
                 st.write("""All resell pricing and listing information is sourced from Chrono24. Data
                 is gathered on a weekly basis on Friday. Prices are the median asking price for the selected
-                reference. Not affiliated with Rolex S.A. or its affiliates. """)
+                reference. Not affiliated with Rolex S.A. or its subsidiaries. """)
             st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
 
         except URLError as e:
