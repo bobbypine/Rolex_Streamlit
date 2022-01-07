@@ -9,7 +9,9 @@ from urllib.error import URLError
 class RolexPrices:
     def __init__(self):
         self.raw = 'https://raw.githubusercontent.com/bobbypine/Rolex/main/Prices/Weekly_Median_Prices.csv'
-        self.data = pd.read_csv(self.raw).set_index('Date')
+        self.data = pd.read_csv(self.raw)
+        self.data['Date'] = pd.to_datetime(self.data['Date'], yearfirst=True, format='%m-%d-%Y')
+        self.data.set_index('Date', inplace=True)
         self.download = self.data.to_csv()
         # self.b = bitdotio.bitdotio(config.key)
         # self.connection = self.b.get_connection()
@@ -49,8 +51,8 @@ class RolexPrices:
             with st.expander('About the Data'):
                 st.write("""All resell pricing and listing information is sourced from Chrono24. Data
                 is gathered on a weekly basis on Friday. Prices are the median asking price for the selected
-                reference. Not affiliated with Rolex S.A. or its subsidiaries. 
-                Values are inclusive of MSRP increases occurring in January of 2022.""")
+                reference. Values are inclusive of MSRP increases occurring in January of 2022. 
+                Not affiliated with Rolex S.A. or its subsidiaries.""")
             st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
 
         except URLError as e:
