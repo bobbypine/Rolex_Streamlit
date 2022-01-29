@@ -41,13 +41,16 @@ class RolexPrices:
             else:
                 price_data = prices[reference_selection]
                 listing_data = listing_data[listings]
-            col1, col2 = st.columns([3,1])
+            col1, col2 = st.columns([3, 1])
             col1.subheader("Pricing")
             col1.line_chart(price_data)
             for x in reference_selection:
-                col2.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item()))+'%')
-            st.write('### Listings')
-            st.bar_chart(listing_data)
+                col2.image(f'{x}.png', caption=x, output_format='PNG')
+            col3, col4 = st.columns([3, 1])
+            col3.subheader('Listings')
+            col3.bar_chart(listing_data)
+            for x in reference_selection:
+                col4.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item())) + '%')
             with st.expander('About the Data'):
                 st.write("""All resell pricing and listing information is sourced from Chrono24. Data
                 is gathered on a weekly basis on Friday. Prices are the median asking price for the selected
