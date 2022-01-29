@@ -31,7 +31,7 @@ class RolexPrices:
 
 
         try:
-            st.image('crown.png')
+            st.image('crown.png', use_column_width=True)
             reference_selection = st.multiselect("Choose Reference", list(prices.columns), ["124270"])
             listings = [f'{x} Listings' for x in reference_selection]
             markups = [f'{x} Markup' for x in reference_selection]
@@ -41,22 +41,26 @@ class RolexPrices:
             else:
                 price_data = prices[reference_selection]
                 listing_data = listing_data[listings]
-            col1, col2 = st.columns([3, 1])
-            col1.subheader("Pricing")
-            col1.line_chart(price_data)
-            for x in reference_selection:
-                col2.image(f'{x}.png', caption=x, output_format='PNG')
-            col3, col4 = st.columns([3, 1])
-            col3.subheader('Listings')
-            col3.bar_chart(listing_data)
-            for x in reference_selection:
-                col4.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item())) + '%')
-            with st.expander('About the Data'):
-                st.write("""All resell pricing and listing information is sourced from Chrono24. Data
-                is gathered on a weekly basis on Friday. Prices are the median asking price for the selected
-                reference. Values are inclusive of MSRP increases occurring in January of 2022. 
-                Not affiliated with Rolex S.A. or its subsidiaries.""")
-            st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
+                image_list = []
+                caption_list = []
+                for x in reference_selection:
+                    image_list.append(f'{x}.png')
+                    caption_list.append(x)
+                st.subheader("Selection")
+                st.image(image_list, caption=caption_list, output_format='PNG', width=200)
+                col1, col2, col3 = st.columns([3, 1,  1])
+                col1.subheader("Pricing")
+                col1.line_chart(price_data)
+                for x in reference_selection:
+                    col2.metric(label=f'{x} Latest Price', value='${:,.0f}'.format(price_data[f'{x}'].tail(1).item()))
+                    col3.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item())) + '%')
+                st.subheader('Listings')
+                st.bar_chart(listing_data)
+                with st.expander('About the Data'):
+                    st.write("""All resell pricing and listing information is sourced from Chrono24. Data is gathered on a weekly basis on Friday. Prices are the median asking price for the selected
+                    reference in new/unworn condition with box and papers. Values are inclusive of MSRP increases occurring in January of 2022. 
+                    Not affiliated with Rolex S.A. or its subsidiaries.""")
+                st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
 
         except URLError as e:
             st.error(f'This Demo Requires Internet Access: {e.reason}')
