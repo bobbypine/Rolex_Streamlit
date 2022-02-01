@@ -54,8 +54,8 @@ class RolexPrices:
                 st.image(image_list, caption=caption_list, output_format='PNG', width=200)
                 col1, col2, col3 = st.columns([3, 1,  1])
                 col1.header("Pricing")
-                col2.header('')
-                col3.header('')
+                col2.header('   ')
+                col3.header('   ')
                 col1.line_chart(price_data)
                 for x in reference_selection:
                     col2.metric(label=f'{x} Latest Price', value='${:,.0f}'.format(price_data[f'{x}'].tail(1).item()),
@@ -63,7 +63,7 @@ class RolexPrices:
                     col3.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item())) + '%')
                 col4, col5 = st.columns([3,1])
                 col4.header('Listings')
-                col5.header('')
+                col5.header('   ')
                 col4.bar_chart(listing_data)
                 for x in reference_selection:
                     col5.metric(label=f'{x} Latest Listings', value=listing_data[f'{x} Listings'].tail(1).item(),
@@ -73,11 +73,12 @@ class RolexPrices:
                 if search == ' ':
                     st.write(' ')
                 else:
-                    st.write(ref_search.prices(search))
+                    with st.spinner(text='Gathering Data...'):
+                        st.write(ref_search.prices(search))
                 with st.expander('About the Data'):
                     st.write("""All resell pricing and listing information is sourced from Chrono24. Data is gathered on
                     a weekly basis on Friday. Prices are the median asking price for the selected reference in new/unworn condition with box and papers. 
-                    Where applicable references are not specific to single configuration (i.e. dial colors).
+                    Where applicable references are not specific to a single configuration (i.e. dial colors).
                     Values are inclusive of MSRP increases occurring in January of 2022. 
                     Not affiliated with Rolex S.A. or its subsidiaries.""")
                 st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
