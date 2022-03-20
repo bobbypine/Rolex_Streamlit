@@ -5,6 +5,8 @@ from urllib.error import URLError
 # import config
 import ref_search
 
+st.set_page_config(page_title='Rolex Resale Prices', page_icon='crown.png')
+
 
 @st.cache
 class RolexPrices:
@@ -68,20 +70,20 @@ class RolexPrices:
                 for x in reference_selection:
                     col5.metric(label=f'{x} Latest Listings', value=listing_data[f'{x} Listings'].tail(1).item(),
                                 delta=(listing_data[f'{x} Listings'].tail(1).item() - listing_data[f'{x} Listings'].iloc[-2].item()))
-                st.subheader('Looking for a different reference?')
-                search = st.text_input('Enter reference number for pricing and listing data', ' ')
-                if search == ' ':
-                    st.write(' ')
-                else:
-                    with st.spinner(text='Gathering Data...'):
-                        st.write(ref_search.prices(search))
-                with st.expander('About the Data'):
-                    st.write("""All resell pricing and listing information is sourced from Chrono24. Data is gathered on
+            st.subheader('Looking for a different reference?')
+            search = st.text_input('Enter reference number for pricing and listing data', ' ')
+            if search == ' ':
+                st.write(' ')
+            else:
+                with st.spinner(text='Gathering Data...'):
+                    st.write(ref_search.prices(search))
+            with st.expander('About the Data'):
+                st.write("""All resell pricing and listing information is sourced from Chrono24. Data is gathered on
                     a weekly basis on Friday. Prices are the median asking price for the selected reference in new/unworn condition with box and papers. 
                     Where applicable references are not specific to a single configuration (i.e. dial colors).
                     Values are inclusive of MSRP increases occurring in January of 2022. 
                     Not affiliated with Rolex S.A. or its subsidiaries.""")
-                st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
+            st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
 
         except URLError as e:
             st.error(f'This Demo Requires Internet Access: {e.reason}')
