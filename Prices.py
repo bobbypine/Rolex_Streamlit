@@ -5,7 +5,7 @@ from urllib.error import URLError
 # import config
 import ref_search
 
-st.set_page_config(page_title='Rolex Resale Prices', page_icon='crown.png')
+st.set_page_config(page_title='Rolex Resale Prices', page_icon='crown.png', layout='wide')
 
 
 @st.cache
