@@ -4,6 +4,7 @@ from urllib.error import URLError
 # import bitdotio
 # import config
 import ref_search
+from datetime import datetime
 
 st.set_page_config(page_title='Rolex Resale Prices', page_icon='crown.png', layout='wide')
 
@@ -13,6 +14,7 @@ class RolexPrices:
     def __init__(self):
         self.raw = 'https://raw.githubusercontent.com/bobbypine/Rolex/main/Prices/Weekly_Median_Prices.csv'
         self.data = pd.read_csv(self.raw)
+        self.latest = datetime.strptime(self.data.Date.tail(1).item(), '%m-%d-%Y').strftime('%m/%d/%Y')
         self.data['Date'] = pd.to_datetime(self.data['Date'], yearfirst=True, format='%m-%d-%Y')
         self.data.set_index('Date', inplace=True)
         self.download = self.data.to_csv()
@@ -35,6 +37,7 @@ class RolexPrices:
 
         try:
             st.image('crown.png', use_column_width=True)
+            st.caption(f'Data as of {self.latest}')
             reference_selection = st.multiselect("Choose Reference", list(prices.columns), ["124270"])
             listings = [f'{x} Listings' for x in reference_selection]
             markups = [f'{x} Markup' for x in reference_selection]
