@@ -30,10 +30,9 @@ class RolexPrices:
         # prices = pd.read_sql(self.prices, self.connection).set_index('Date')
         # listing_data = pd.read_sql(self.listings, self.connection).set_index('Date')
         # markup_data = pd.read_sql(self.markup, self.connection).set_index('Date')
-        prices = self.data.loc[:, list(self.data.columns[0:4]) + list(self.data.columns[12:16]) + list(self.data.columns[24:25])]
-        listing_data = self.data.loc[:, list(self.data.columns[4:8]) + list(self.data.columns[16:20]) + list(self.data.columns[25:26])]
-        markup_data = self.data.loc[:, list(self.data.columns[8:12]) + list(self.data.columns[20:24]) + list(self.data.columns[26:27])]
-
+        prices = self.data.loc[:, (~self.data.columns.str.contains('Markup') & ~self.data.columns.str.contains('Listings'))]
+        listing_data = self.data.loc[:, self.data.columns.str.contains('Listings')]
+        markup_data = self.data.loc[:, self.data.columns.str.contains('Markup')]
 
         try:
             st.image('crown.png', use_column_width=True)
@@ -47,7 +46,7 @@ class RolexPrices:
             else:
                 names = {'124270': 'Explorer', '124300': 'OP 41', '126610LN': 'Submariner Date', '126710BLRO': 'GMT-Master II (Blue/Red)',
                         '124060': 'Submariner', '126610LV': 'Submariner Date (Green)', '126710BLNR': 'GMT-Master II (Black/Blue)',
-                        '226570': 'Explorer II', '116500LN': 'Daytona'}
+                        '226570': 'Explorer II', '116500LN': 'Daytona', '126711CHNR': 'GMT Master II (Rootbeer)'}
                 price_data = prices[reference_selection]
                 listing_data = listing_data[listings]
                 image_list = []
