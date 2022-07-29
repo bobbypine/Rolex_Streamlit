@@ -14,8 +14,8 @@ class RolexPrices:
     def __init__(self):
         self.raw = 'https://raw.githubusercontent.com/bobbypine/Rolex/main/Prices/Weekly_Median_Prices.csv'
         self.data = pd.read_csv(self.raw)
-        self.latest = datetime.strptime(self.data.Date.tail(1).item(), '%m-%d-%Y').strftime('%m/%d/%Y')
-        self.data['Date'] = pd.to_datetime(self.data['Date'], yearfirst=True, format='%m-%d-%Y')
+        self.latest = datetime.strptime(self.data.Date.tail(1).item(), '%m/%d/%Y').strftime('%m/%d/%Y')
+        self.data['Date'] = pd.to_datetime(self.data['Date'], yearfirst=True, format='%m/%d/%Y')
         self.data.set_index('Date', inplace=True)
         self.download = self.data.to_csv()
         # self.b = bitdotio.bitdotio(config.key)
