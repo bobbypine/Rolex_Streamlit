@@ -64,6 +64,10 @@ class RolexPrices:
                 for x in reference_selection:
                     col2.metric(label=f'{x} Latest Price', value='${:,.0f}'.format(price_data[f'{x}'].tail(1).item()),
                                 delta=(price_data[f'{x}'].tail(1).item() - price_data[f'{x}'].iloc[-2].item()))
+                    if price_data[f'{x}'].pct_change(50).tail(1).isna().item():
+                        None
+                    else:
+                        col2.metric(label=f'{x} YoY Price', value='{:,.0f}%'.format((price_data[f'{x}'].pct_change(50).tail(1).round(3).item())*100))
                     col3.metric(label=f'{x} Markup', value=str(int(markup_data[f'{x} Markup'].tail(1).item())) + '%')
                 col4, col5 = st.columns([3,1])
                 col4.header('Listings')
@@ -72,6 +76,10 @@ class RolexPrices:
                 for x in reference_selection:
                     col5.metric(label=f'{x} Latest Listings', value=listing_data[f'{x} Listings'].tail(1).item(),
                                 delta=(listing_data[f'{x} Listings'].tail(1).item() - listing_data[f'{x} Listings'].iloc[-2].item()))
+                    if listing_data[f'{x} Listings'].pct_change(50).tail(1).isna().item():
+                        None
+                    else:
+                        col5.metric(label=f'{x} YoY Listings', value='{:,.0f}%'.format((listing_data[f'{x} Listings'].pct_change(50).tail(1).round(3).item())*100))
             st.subheader('Looking for a different reference?')
             search = st.text_input('Enter reference number for pricing and listing data', ' ')
             if search == ' ':
