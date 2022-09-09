@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import config
 import datetime
 import numpy as np
 
@@ -16,7 +15,7 @@ def prices(ref):
             options = Options()
             options.headless = True
             options.add_argument("--window-size=1920,1200")
-            DRIVER_PATH = config.cd_path
+            DRIVER_PATH = ENV['cd_path']
             driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
             driver.get(url)
             element = driver.find_elements(By.ID, "wt-watches")[0].get_attribute("innerHTML")
