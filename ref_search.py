@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+import config
 import datetime
 import numpy as np
 
@@ -36,6 +37,8 @@ def prices(ref):
     data.set_index('Date', inplace=True)
     median = np.median(data[ref])
     return f'{ref} Median Price: ${median}, {len(data)} Observations'
+
+
 
 
 
