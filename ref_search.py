@@ -15,9 +15,11 @@ def prices(ref):
             url = f'https://www.chrono24.com/search/index.htm?currencyId=USD&dosearch=true&facets=condition&facets=specials&facets=usedOrNew&facets=availability&maxAgeInDays=0&pageSize=120&query=Rolex+{ref}&redirectToSearchIndex=true&resultview=block&searchexplain=1&showpage={x}&sortorder=0&specials=102&usedOrNew=new'
             options = Options()
             options.headless = True
-            options.add_argument("--window-size=1920,1200")
-            DRIVER_PATH = os.environ.get('cd_path')
-            driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+            options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--no-sandbox")
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                      chrome_options=options)
             driver.get(url)
             element = driver.find_elements(By.ID, "wt-watches")[0].get_attribute("innerHTML")
             soup = BeautifulSoup(element, 'html.parser')
