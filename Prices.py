@@ -5,6 +5,7 @@ from urllib.error import URLError
 # import config
 import ref_search
 from datetime import datetime
+import index
 
 st.set_page_config(page_title='Rolex Resale Prices', page_icon='crown.png', layout='wide')
 
@@ -80,6 +81,11 @@ class RolexPrices:
                         None
                     else:
                         col5.metric(label=f'{x} YoY Listings', value='{:,.0f}%'.format((listing_data[f'{x} Listings'].pct_change(50).tail(1).round(3).item())*100))
+            st.subheader('Rolex Price Movement Index')
+            index_data = index.index_chart(data=self.data[reference_selection])
+            start_date = index_data.head(1).index.item().strftime('%m/%d/%Y')
+            st.caption(f'{start_date} = 1.0')
+            st.line_chart(index_data)
             st.subheader('Looking for a different reference?')
             search = st.text_input('Enter reference number for pricing and listing data', ' ')
             if search == ' ':
