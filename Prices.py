@@ -55,7 +55,7 @@ class RolexPrices:
                 image_list = []
                 caption_list = []
                 for x in reference_selection:
-                    image_list.append(f'{x}.png')
+                    image_list.append(f'../images/{x}.png')
                     caption_list.append(reference_selection)
                 st.subheader("Selection")
                 st.image(image_list, caption=caption_list, output_format='PNG', width=200)
