@@ -47,16 +47,16 @@ class RolexPrices:
             if not reference_selection:
                 st.error("Please Select a Reference Number")
             else:
-                names = {'124270': 'Explorer', '124300': 'OP 41', '126610LN': 'Submariner Date', '126710BLRO': 'GMT-Master II (Blue/Red)',
-                        '124060': 'Submariner', '126610LV': 'Submariner Date (Green)', '126710BLNR': 'GMT-Master II (Black/Blue)',
-                        '226570': 'Explorer II', '116500LN': 'Daytona', '126711CHNR': 'GMT Master II (Rootbeer)'}
+                # names = {'124270': 'Explorer', '124300': 'OP 41', '126610LN': 'Submariner Date', '126710BLRO': 'GMT-Master II (Blue/Red)',
+                #         '124060': 'Submariner', '126610LV': 'Submariner Date (Green)', '126710BLNR': 'GMT-Master II (Black/Blue)',
+                #         '226570': 'Explorer II', '116500LN': 'Daytona', '126711CHNR': 'GMT Master II (Rootbeer)'}
                 price_data = prices[reference_selection]
                 listing_data = listing_data[listings]
                 image_list = []
                 caption_list = []
                 for x in reference_selection:
                     image_list.append(f'{x}.png')
-                    caption_list.append(names[x])
+                    caption_list.append(reference_selection)
                 st.subheader("Selection")
                 st.image(image_list, caption=caption_list, output_format='PNG', width=200)
                 col1, col2, col3 = st.columns([3, 1,  1])
