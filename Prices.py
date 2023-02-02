@@ -99,7 +99,7 @@ class RolexPrices:
                 st.write("""All resell pricing and listing information is sourced from Chrono24. Data is gathered on
                     a weekly basis on Friday. Prices are the median asking price for the selected reference in new/unworn condition with box and papers. 
                     Where applicable references are not specific to a single configuration (i.e. dial colors).
-                    Values are inclusive of MSRP increases occurring in January of 2022. 
+                    Values are inclusive of periodic MSRP increases. 
                     Not affiliated with Rolex S.A. or its subsidiaries.""")
             st.download_button(label="Download Data", data=self.download, file_name='Rolex_Data.csv', mime='text/csv')
 
